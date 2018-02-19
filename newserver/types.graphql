@@ -1,0 +1,75 @@
+# The following types define the data model of the example service
+# based on which the GraphQL API is generated
+
+type User @model {
+  id: ID! @isUnique
+  name: String
+  dateOfBirth: DateTime
+
+  # Uncomment below - you can declare relations between models like this
+
+  # posts: [Post!]! @relation(name: "UserPosts")
+}
+
+enum Format {
+  Format1,
+  Format2,
+  Format3,
+  Format4,
+}
+
+type Image @model {
+  id: ID! @isUnique
+  title: String
+  description: String
+  appearIn: Post! @relation(name: "PostImages")
+  src: String @defaultValue(value: "img/default-post-image.jpg")
+}
+
+type BackgroundImage @model {
+  id: ID! @isUnique
+  title: String
+  description: String
+  appearIn: Post! @relation(name: "PostBackgroundImage")
+  src: String @defaultValue(value: "img/default-post-bg.jpg")
+}
+
+type ThumbnailBackgroundImage @model {
+  id: ID! @isUnique
+  title: String
+  description: String
+  appearIn: Section! @relation(name: "SectionBackgroundImage")
+  src: String @defaultValue(value: "img/default-section-bg.jpg")
+  bigSrc: String @defaultValue(value: "img/default-section-bg.jpg")
+}
+
+type Post @model {
+  id: ID! @isUnique
+  title: String
+  author: String
+  subheader: String
+  format: Format
+  background: BackgroundImage @relation(name: "PostBackgroundImage") 
+  isPublished: Boolean @defaultValue(value: "false")
+  images: [Image!]! @relation(name: "PostImages")
+  section: Section! @relation(name: "SectionPost")
+  content: String
+}
+
+type Section @model {
+  id: ID! @isUnique
+  header: String!
+  subheader: String
+  background: ThumbnailBackgroundImage @relation(name: "SectionBackgroundImage") 
+  posts: [Post!]! @relation(name: "SectionPost")
+  issue: Issue! @relation(name: "IssueSections")
+}
+
+type Issue @model {
+  id: ID! @isUnique
+  issue: Int
+  title: String
+  subheader: String
+  description: String
+  sections: [Section!]! @relation(name: "IssueSections")
+}
