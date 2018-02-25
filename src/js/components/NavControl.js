@@ -7,7 +7,7 @@ import Box from 'grommet/components/Box';
 import Button from 'grommet/components/Button';
 import Title from 'grommet/components/Title';
 import Logo from 'grommet/components/icons/Grommet';
-
+import Image from 'grommet/components/Image';
 import { navActivate } from '../actions/nav';
 
 class NavControl extends Component {
@@ -15,7 +15,7 @@ class NavControl extends Component {
     const { name, nav: { active } } = this.props;
 
     let result;
-    const title = <Title>{name || 'Sixyear Grommet'}</Title>;
+    const title = <Title>{name || 'The Six Years'}</Title>;
     if (!active) {
       result = (
         <Button onClick={() => this.props.dispatch(navActivate(true))}>
@@ -24,7 +24,14 @@ class NavControl extends Component {
             responsive={false}
             pad={{ between: 'small' }}
           >
-            <Logo />
+            {/* <Logo /> */}
+            <Image
+              src={`${location.origin}/img/logo.png`}
+              style={{
+                width: 56,
+                height: 50
+              }}
+            />
             {title}
           </Box>
         </Button>

@@ -18,12 +18,13 @@ enum Format {
   Format4,
 }
 
+
 type Image @model {
   id: ID! @isUnique
   title: String
   description: String
   appearIn: Post! @relation(name: "PostImages")
-  src: String @defaultValue(value: "img/default-post-image.jpg")
+  src: String! @defaultValue(value: "img/default-post-image.jpg")
 }
 
 type BackgroundImage @model {
@@ -31,7 +32,7 @@ type BackgroundImage @model {
   title: String
   description: String
   appearIn: Post! @relation(name: "PostBackgroundImage")
-  src: String @defaultValue(value: "img/default-post-bg.jpg")
+  src: String! @defaultValue(value: "img/default-post-bg.jpg")
 }
 
 type ThumbnailBackgroundImage @model {
@@ -39,8 +40,15 @@ type ThumbnailBackgroundImage @model {
   title: String
   description: String
   appearIn: Section! @relation(name: "SectionBackgroundImage")
-  src: String @defaultValue(value: "img/default-section-bg.jpg")
+  src: String! @defaultValue(value: "img/default-section-bg.jpg")
   bigSrc: String @defaultValue(value: "img/default-section-bg.jpg")
+}
+
+type IssueBackgroundImage @model {
+  id: ID! @isUnique
+  title: String
+  description: String
+  src: String! @defaultValue(value: "img/default-issue-bg.jpg")
 }
 
 type Post @model {
@@ -48,7 +56,9 @@ type Post @model {
   title: String
   author: String
   subheader: String
-  format: Format
+  description: String
+  format: Format @defaultValue(value: Format1)
+  isFeatured: Boolean @defaultValue(value: "false")
   background: BackgroundImage @relation(name: "PostBackgroundImage") 
   isPublished: Boolean @defaultValue(value: "false")
   images: [Image!]! @relation(name: "PostImages")
@@ -56,11 +66,18 @@ type Post @model {
   content: String
 }
 
+# featured: 1 -> card list in home
+# featured: 2 -> Carosell with featured post 
+# featured: 3 -> 
+#
 type Section @model {
   id: ID! @isUnique
   header: String!
   subheader: String
-  background: ThumbnailBackgroundImage @relation(name: "SectionBackgroundImage") 
+  description: String
+  layout: Int @defaultValue(value: 1)
+  featured: Int @defaultValue(value: 1)
+  background: ThumbnailBackgroundImage! @relation(name: "SectionBackgroundImage") 
   posts: [Post!]! @relation(name: "SectionPost")
   issue: Issue! @relation(name: "IssueSections")
 }
@@ -68,7 +85,7 @@ type Section @model {
 type Issue @model {
   id: ID! @isUnique
   issue: Int
-  title: String
+  title: String! @defaultValue(value: "The Six Years")
   subheader: String
   description: String
   sections: [Section!]! @relation(name: "IssueSections")

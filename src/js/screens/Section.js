@@ -7,6 +7,9 @@ import Card from 'grommet/components/Card';
 import Footer from 'grommet/components/Footer';
 import Title from 'grommet/components/Title';
 import Menu from 'grommet/components/Menu';
+import gql from 'graphql-tag';
+import { graphql } from 'react-apollo';
+
 
 import Anchor from 'grommet/components/Anchor';
 import Article from 'grommet/components/Article';
@@ -24,151 +27,54 @@ import Spinning from 'grommet/components/icons/Spinning';
 import { getMessage } from 'grommet/utils/Intl';
 
 import NavControl from '../components/NavControl';
-import {
-  loadDashboard, unloadDashboard
-} from '../actions/dashboard';
+import Section from '../components/Section/Section';
+import Section2 from '../components/Section/Section2';
 
 import { pageLoaded } from './utils';
 
-class Dashboard extends Component {
+
+class SectionScreen extends Component {
   componentDidMount() {
-    pageLoaded('Dashboard');
-    this.props.dispatch(loadDashboard());
+    pageLoaded('The Six Years');
   }
-
   componentWillUnmount() {
-    this.props.dispatch(unloadDashboard());
   }
-
   render() {
-    const { error, tasks } = this.props;
-    const { intl } = this.context;
-
-    let errorNode;
-    let listNode;
-    if (error) {
-      errorNode = (
-        <Notification
-          status='critical'
-          size='large'
-          state={error.message}
-          message='An unexpected error happened, please try again later'
-        />
-      );
+    const { match: { params }, history, layoutData } = this.props;
+    console.log(this.props);
+    let layout;
+    let header;
+    layoutData.Section && ({ layout, header } = layoutData.Section);
+    console.log(layout);
+    if (layout) {
+    switch (layout) {
+      case 1:
+        return <Section sectionId={params.section} {...this.props} />;
+      case 2:
+        return <Section2 sectionId={params.section} {...this.props} />;
+      default:
+        return <Section sectionId={params.section} {...this.props} />;
     }
-    const homeImage = (
-      <Image
-        src='/img/home-hero.jpg'
-        fit='cover'
-        full={true}
-      />
-    );
-    const a = [1, 2, 3, 4, 5];
-    return (
-      <Article primary={true}>
-        <Header
-          direction='row'
-          justify='between'
-          size='large'
-          pad={{ horizontal: 'medium', between: 'small' }}
-        >
-          <NavControl />
-        </Header>
-        {errorNode}
-        <Hero
-          background={homeImage}
-
-        >
-          <Box direction='row'
-            justify='center'
-            align='center'>
-            <Box basis='1/2'
-              align='end'
-              pad='medium' />
-            <Box basis='1/2'
-              align='start'
-              pad='medium'>
-              <Heading margin='none'>
-                                The Six Years
-              </Heading>
-            </Box>
-          </Box>
-        </Hero>
-        <Box
-          direction='row'
-          justify='start'
-          align='center'
-          wrap={true}
-          colorIndex='light-2'
-          pad='small'
-        >
-          {
-            a.map(d => (
-              <Card
-                thumbnail='/img/home-hero.jpg'
-                label='Sample Label'
-                heading='Sample Heading'
-                description='Sample description providing more details.' />))
-          }
-        </Box>
-        <Box pad='medium'>
-          <Heading tag='h3' strong={true}>
-                        Running Tasks
-          </Heading>
-          <Paragraph size='large'>
-                        The backend here is using request polling (5 second interval).
-            See <Anchor path='/tasks'
-              label={getMessage(intl, 'Tasks')} /> page for an example
-                      of websocket communication.
-          </Paragraph>
-        </Box>
-        {listNode}
-        <Footer justify='between'>
-          <Title>
-            <s />
-                        Title
-          </Title>
-          <Box direction='row'
-            align='center'
-            pad={{ between: 'medium' }}>
-            <Paragraph margin='none'>
-                            © 2016 Grommet Labs
-            </Paragraph>
-            <Menu direction='row'
-              size='small'
-              dropAlign={{ right: 'right' }}>
-              <Anchor href='#'>
-                                Support
-              </Anchor>
-              <Anchor href='#'>
-                                Contact
-              </Anchor>
-              <Anchor href='#'>
-                                About
-              </Anchor>
-            </Menu>
-          </Box>
-        </Footer>
-      </Article>
-    );
+    } return <Section sectionId={params.section} {...this.props} />;
   }
 }
+const FETCH_LAYOUT_OF_A_SECTION = gql`
+  query FETCH_LAYOUT_OF_A_SECTION($id: ID) {
+    Section(id: $id)
+    {
+      id
+      layout
+      header
+    }
+  }
+`;
+const sectionID = document.location.pathname.split('/section/')[1];
+console.log(sectionID)
 
-Dashboard.defaultProps = {
-  error: undefined,
-  tasks: []
-};
+const SectionScreenWithQuery = graphql(FETCH_LAYOUT_OF_A_SECTION, {
+  name: 'layoutData',
+  options: (props) => ({ variables: { id: sectionID}}),
+})(SectionScreen);
 
-Dashboard.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  error: PropTypes.object,
-  tasks: PropTypes.arrayOf(PropTypes.object)
-};
+export default SectionScreenWithQuery;
 
-Dashboard.contextTypes = {
-  intl: PropTypes.object
-};
-
-const select = state => ({ ...state.dashboard });
-
-export default connect(select)(Dashboard);

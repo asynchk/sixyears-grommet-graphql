@@ -10,7 +10,7 @@ import Button from 'grommet/components/Button';
 import CloseIcon from 'grommet/components/icons/base/Close';
 import Logo from 'grommet/components/icons/Grommet';
 import Anchor from 'grommet/components/Anchor';
-
+import Image from 'grommet/components/Image';
 import SessionMenu from './SessionMenu';
 import { navActivate } from '../actions/nav';
 
@@ -32,11 +32,17 @@ class NavSidebar extends Component {
     ));
 
     return (
-      <Sidebar colorIndex='neutral-3' fixed={true}>
+      <Sidebar colorIndex='neutral-1-t' fixed={true}>
         <Header size='large' justify='between' pad={{ horizontal: 'medium' }}>
           <Title onClick={this._onClose} a11yTitle='Close Menu'>
-            <Logo />
-            <span>Sixyear Grommet</span>
+            {/* <Logo /> */}
+            <Image
+              src={`${location.origin}/img/logo.png`}
+              style={{
+                width: 50
+              }}
+            />
+            <span>The Six Years</span>
           </Title>
           <Button
             icon={<CloseIcon />}

@@ -12,6 +12,7 @@ import Home from '../screens/HomeNews';
 import Section from '../screens/Section';
 import Login from '../screens/Login';
 import Dashboard from '../screens/Dashboard';
+import Post from '../screens/Post';
 import Tasks from '../screens/Tasks';
 import Task from '../screens/Task';
 import NotFound from '../screens/NotFound';
@@ -49,6 +50,7 @@ class Main extends Component {
             <Switch>
               <Route exact={true} path='/' component={Home} />
               <Route path='/section/:section' component={Section} />
+              <Route path='/post/:post' component={Post} />
               <Route path='/dashboard' component={Dashboard} />
               <Route path='/login' component={Login} />
               <Route path='/tasks/:id' component={Task} />

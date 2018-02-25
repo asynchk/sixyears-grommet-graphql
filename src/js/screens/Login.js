@@ -14,6 +14,7 @@ import Logo from 'grommet/components/icons/Grommet';
 import { login } from '../actions/session';
 import { navEnable } from '../actions/nav';
 import { pageLoaded } from './utils';
+import tempText from '../message';
 
 class Login extends Component {
   constructor() {
@@ -34,7 +35,7 @@ class Login extends Component {
     const { dispatch } = this.props;
     const { router } = this.context;
     dispatch(login(fields.username, fields.password, () => (
-      router.history.push('/dashboard')
+      router.history.push('/')
     )));
   }
 
@@ -47,15 +48,15 @@ class Login extends Component {
         <Article>
           <Section
             full={true}
-            colorIndex='brand'
-            texture='url(img/splash.png)'
+            colorIndex='neutral-1'
+            texture='url(img/splash4.jpeg)'
             pad='large'
             justify='center'
             align='center'
           >
-            <Heading tag='h1' strong={true}>Sixyear Grommet</Heading>
+            <Heading tag='h1' strong={true}>The Six Years</Heading>
             <Paragraph align='center' size='large'>
-              Development with Grommet is cool.
+              That six years
             </Paragraph>
           </Section>
         </Article>
@@ -75,7 +76,7 @@ class Login extends Component {
             size='small'
             pad={{ horizontal: 'medium', vertical: 'small' }}
           >
-            <span className='secondary'>&copy; 2017 Grommet Labs</span>
+            <span className='secondary'>&copy;{tempText.copyRight}</span>
           </Footer>
         </Sidebar>
 
