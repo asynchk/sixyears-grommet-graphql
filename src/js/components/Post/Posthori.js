@@ -14,7 +14,7 @@ import LinkNextIcon from 'grommet/components/icons/base/LinkNext';
 import Anchor from 'grommet/components/Anchor';
 import Article from 'grommet/components/Article';
 import Box from 'grommet/components/Box';
-import Header from '../Header';
+import Header from 'grommet/components/Header';
 import Heading from 'grommet/components/Heading';
 import Label from 'grommet/components/Label';
 import List from 'grommet/components/List';
@@ -39,51 +39,88 @@ class Post extends Component {
     return (
         this.props.postData?
       this.props.postData.Post ?
-          <Article primary={true} full='vertical'>
-            <Header
-              direction='row'
-              justify='between'
-              size='large'
-              pad={{ horizontal: 'medium', between: 'small' }}
-            >
-              <NavControl />
-            </Header>
-            <Hero
-              background={Post.background ? <Image src={Post.background ? `${location.origin}/${Post.background.src}` : undefined } fit='cover' full />: undefined}
-              size='small'
-              colorIndex='brand'
+      <Box
+        align='center'
+        colorIndex='light-2'
+      >
+          <Box
+          colorIndex='light-1'
+            size={{
+              width: 'xxlarge'
+            }}
 
-            >
+            // align='center'
+          >
+            
+              { Post.background && <Hero
+                background={<Image src={Post.background ? `${location.origin}/${Post.background.src}` : '' } fit='cover' full />} 
+            size='medium'
+
+          >
               <Box direction='row'
                 justify='center'
                 align='center'>
-           
                 <Box basis='1/2'
-                  align='center'
+                  align='end'
+                  pad='medium' />
+                <Box basis='1/2'
+                  align='start'
                   pad='medium'>
                   <Heading margin='none'>
-                    {Post.title || Post.subheader || Post.author }
+                      {window.innerWidth > 716? '': Post.title}
                   </Heading>
                 </Box>
               </Box>
-            </Hero>
+            </Hero>}
             <Box
-              flex='grow'
               
               justify='start'
               align='center'
               wrap={true}
-              colorIndex='light-2'
-              pad='small'
-                        style={{ whiteSpace: "pre-line", paddingBottom: 150}}
+              colorIndex='light-1'
+              pad='medium'
+              size={{
+                height: {
+                  min: 'medium'
+                }
+              }}
+                        // style={{ whiteSpace: "pre-line"}}
                   >
                   <div>
                         {this.lineToParagraph(Post.content)}
                     </div>
             </Box>
-            <Footer />
-          </Article> :
-                <Spinning /> :
+            </Box>
+            
+          </Box> :
+          <Hero
+            // background={<Image src={`${location.origin}/${Post.background.src}`} fit='cover' full />}
+            size='small'
+
+          >
+            <Box direction='row'
+              justify='center'
+              align='center'>
+              <Box basis='1/2'
+                align='end'
+                pad='medium' />
+              <Box basis='1/2'
+                align='start'
+                pad='medium'>
+                <Heading margin='none'>
+                  {this.props.sectionHeader}
+                </Heading>
+              </Box>
+              <Box
+                // basis='1/2'
+                align='start'
+                pad='medium'>
+                <p>
+                  Press A Post And Start Reading
+                </p>
+              </Box>
+            </Box>
+          </Hero>:
             <Spinning />
     );
   }
