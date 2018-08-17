@@ -39,7 +39,24 @@ import CaroSections from '../components/HomeSection/CaroSection';
 import TilesSection from '../components/HomeSection/TilesSection';
 import { pageLoaded } from './utils';
 import PostCardsSection from '../components/HomeSection/PostCardsSection';
+import YouTube from 'react-youtube';
+import ScrollIntoView from 'react-scroll-into-view';
+import Video from 'grommet/components/Video';
 
+
+const opts = {
+  height: window.innerWidth < 790 ? '540' : '384',
+  width: `${window.innerWidth}`,
+  playerVars: {
+    controls: 0,
+    loop: 1,
+    showinfo: 0,
+    disablekb: 1,
+    playsinline: 1,
+    rel: 0,
+    autoplay: 1,
+  }
+};
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -47,9 +64,41 @@ class Dashboard extends Component {
       showAll: false,
       cardSection: {},
     };
+    this.updateDimensions = this.updateDimensions.bind(this);
+    this.state = {
+      Youtube: null,
+    };
   }
   componentDidMount() {
     pageLoaded('The Six Years');
+    this.updateDimensions();
+    window.addEventListener('resize', this.updateDimensions);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  }
+
+
+  updateDimensions() {
+    this.setState({
+      Youtube: <YouTube
+        videoId='DYqu1U7CNOo'
+        opts={{
+          height: window.innerWidth < 790 ? '384' : '540',
+          width: `${window.innerWidth}`,
+          playerVars: {
+            controls: 0,
+            loop: 1,
+            showinfo: 0,
+            disablekb: 1,
+            playsinline: 1,
+            rel: 0,
+            autoplay: 1,
+          }
+        }}
+      // onReady={thi}
+      />
+    });
   }
   render() {
     const homeImage = (
@@ -65,7 +114,7 @@ class Dashboard extends Component {
     return (
       <Article primary={true}>
         <HeaderSix />
-        <Hero background={homeImage} backgroundColorIndex='dark' size='medium' >
+        <Hero background={this.state.Youtube} backgroundColorIndex='dark' size='medium' >
           <Box direction='row' justify='center' align='center'>
             <Box basis='1/2' align='end' pad='medium' />
             <Box basis='1/2' align='start' pad='medium'>
@@ -77,6 +126,43 @@ class Dashboard extends Component {
             </Box>
           </Box>
         </Hero>
+        <Box
+          direction='row'
+          justify='around'
+          // colorIndex='neutral-4'
+          style={{
+            zIndex: 10,
+            marginTop: window.innerWidth > 790 ? '-40' : '0',
+          }}
+          pad={{
+            horizontal: 'medium',
+            vertical: 'none'
+          }}
+          // responsive={false}
+        >
+          {
+            this.props.allSections.allSections && (this.props.allSections.allSections).map((s) => {
+              const { header, background: { src }, id } = s;
+              return (
+                <ScrollIntoView selector={`#${id}`}>
+                  <Box
+                    colorIndex='light-1'
+                    pad={{
+                      horizontal: 'medium',
+                      vertical: 'large'
+                    }}
+
+                  >
+                    <Title>
+                      {header}
+                    </Title>
+                  </Box>
+                </ScrollIntoView>
+              );
+            })
+          }
+        </Box>
+
         {this.props.allSections.allSections && DoubleBoxSection({ allSections: this.props.allSections.allSections }).map(c => c)}
         {this.props.allSections.allSections &&
           TilesSection({
@@ -94,19 +180,19 @@ class Dashboard extends Component {
             align='center'
             pad='medium'
           >
-          <Heading strong tag='h2'>投稿</Heading>
-          <Columns
-            justify='center'
-            margin='small'
-            maxCount={3}
-            masonry={true}>
-            {PostCardsSection({ allSections: this.props.allSections.allSections }).map(q => q)}
-          {/* // </Box> */}
-          </Columns>
+            <Heading strong tag='h2'>投稿</Heading>
+            <Columns
+              justify='center'
+              margin='small'
+              maxCount={3}
+              masonry={true}>
+              {PostCardsSection({ allSections: this.props.allSections.allSections }).map(q => q)}
+              {/* // </Box> */}
+            </Columns>
           </Box>
 
-          }
-        <Footer />
+        }
+        <Footer ref='home' />
       </Article>
     );
   }
@@ -160,6 +246,28 @@ const ALL_SECTIONS_QUERY = gql`
           src
         }
       }
+    }
+  }
+`;
+
+const HEADER_PREVIEW_SECTION = gql`
+query FETCH_ALL_SECTIONS {
+    allSections(filter: {issue:{issue: 3}}){
+      id
+      header
+      issue {
+        id
+        issue
+      }
+      subheader
+      background {
+        src
+      }
+      issue {
+        id
+        issue
+      }
+      featured
     }
   }
 `;

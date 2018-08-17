@@ -35,30 +35,37 @@ const titleHeading = p => (
 );
 const PostCardsSection = ({ allSections }) => (
   allSections && allSections.filter(s => s.featured == 2).map(s => (
-    s.posts.map(p => (
-      <Tile
-        onClick={() => window.location.pathname = `/post/${p.id}`}
-        margin='medium'
-      >
-        <Card
-          key={p.id}
-          thumbnail={p.background ? p.background.src : null}
-          textSize='medium'
-          label={<Label><EditIcon /> {s.header}</Label>}
-          heading={titleHeading(p)}
-          link={<Anchor
-            href={`/post/${p.id}`}
-            label='Read More'
-            icon={<LinkNextIcon />}
-          />}
-          colorIndex='light-1'
-          style={{
-            width: 330,
-            // minHeight: 300
-          }}
-        />
-      </Tile>
-    ))
+    <div
+      id={s.id}
+    >
+      {
+        s.posts.map(p => (
+          <Tile
+            onClick={() => window.location.pathname = `/post/${p.id}`}
+            margin='medium'
+          >
+            <Card
+              key={p.id}
+              thumbnail={p.background ? p.background.src : null}
+              textSize='medium'
+              label={<Label><EditIcon /> {s.header}</Label>}
+              heading={titleHeading(p)}
+              link={<Anchor
+                href={`/post/${p.id}`}
+                label='Read More'
+                icon={<LinkNextIcon />}
+              />}
+              colorIndex='light-1'
+              style={{
+                width: 330,
+                // minHeight: 300
+              }}
+            />
+          </Tile>
+        ))
+      }
+    </div>
+
   ))
 );
 

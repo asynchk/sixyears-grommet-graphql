@@ -24,6 +24,7 @@ import Columns from 'grommet/components/Columns';
 const TilesSection = ({ allSections, isShowAll, onPress }) => (
   allSections && allSections.filter(s => s.featured == 5).map(s => (
     <Section
+      id={s.id}
       key={s.id}
       pad='none'
     >

@@ -23,8 +23,10 @@ import Carousel from 'grommet/components/Carousel';
 const CaroSection = ({ allSections }) => (
   allSections && allSections.filter(s => s.featured == 1).map(s => (
     <Section
+      id={s.id}
       pad='none'
       key={s.id}
+
     >
       <Box
         full='horizontal'

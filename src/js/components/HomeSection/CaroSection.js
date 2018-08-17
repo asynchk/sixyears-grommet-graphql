@@ -35,9 +35,10 @@ const CaroSection = ({ allSections }) => (
       postEles.unshift(sectionContent);
       return (
         <Carousel
+          id={s.id}
           key={s.id}
-              autoplaySpeed={8000}
-              persistentNav={true}
+          autoplaySpeed={8000}
+          persistentNav={true}
 
         >
           {
@@ -70,9 +71,9 @@ const CaroSection = ({ allSections }) => (
                   pad='small'
                   margin='small'
                   style={{
-                      position: 'absolute',
-                      left: 0,
-                      top: 0
+                    position: 'absolute',
+                    left: 0,
+                    top: 0
 
                   }}
 
@@ -121,8 +122,8 @@ const CaroSection = ({ allSections }) => (
                 <Box
                   direction='cloumn'
                   justify='end'
-                            //   basis='large'
-                            basis='3/4'
+                  //   basis='large'
+                  basis='3/4'
                   size={{
                     width: {
 
@@ -132,7 +133,7 @@ const CaroSection = ({ allSections }) => (
                       min: 'medium'
                     }
                   }}
-                //   pad='large'
+                  //   pad='large'
                   // margin='none'
                   texture={`${location.origin}/${p.background.src}`}
 

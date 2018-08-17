@@ -38,6 +38,7 @@ import Carousel from 'grommet/components/Carousel';
 const QuestionsHeroSection = ({ allSections }) => (
   allSections.allSections && allSections.allSections.length > 0 && allSections.allSections.filter(s => s.featured == 6).map(s => (
     <Section
+      id={s.id}
       key={s.id}
       pad='none'
       texture={s.background.src}
@@ -53,7 +54,7 @@ const QuestionsHeroSection = ({ allSections }) => (
           paddingRight: 0
         }}
       >
-        <Heading strong  >{s.header}</Heading>
+        <Heading strong >{s.header}</Heading>
         <Label uppercase>{s.subheader}</Label>
         <Headline strong size='small'>{s.description}</Headline>
         <Box
