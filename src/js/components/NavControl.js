@@ -15,7 +15,7 @@ class NavControl extends Component {
     const { name, nav: { active } } = this.props;
 
     let result;
-    const title = <Title>{name || 'The Six Years'}</Title>;
+    const title = <Title>{name || '六年'}</Title>;
     if (!active) {
       result = (
         <Button onClick={() => this.props.dispatch(navActivate(true))}>
@@ -26,18 +26,18 @@ class NavControl extends Component {
           >
             {/* <Logo /> */}
             <Image
-              src={`${location.origin}/img/logo.png`}
+              src={`${location.origin}/img/sixyearslogo4.png`}
               style={{
-                width: 56,
+                width: 120,
                 height: 50
               }}
             />
-            {title}
+            {/* {title} */}
           </Box>
         </Button>
       );
     } else {
-      result = title;
+      result = null
     }
     return result;
   }

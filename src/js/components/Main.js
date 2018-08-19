@@ -15,6 +15,8 @@ import Login from '../screens/Login';
 import Dashboard from '../screens/Dashboard';
 import Post from '../screens/Post';
 import Support from '../screens/Support';
+import Next from '../screens/Next';
+import About from '../screens/About';
 // import Tasks from '../screens/Tasks';
 // import Task from '../screens/Task';
 import NotFound from '../screens/NotFound';
@@ -23,6 +25,26 @@ class Main extends Component {
   constructor() {
     super();
     this._onResponsive = this._onResponsive.bind(this);
+    this.state = {
+      width: window.innerWidth,
+      height: window.innerHeight
+    };
+    this.updateDimensions = this.updateDimensions.bind(this);
+  }
+
+  componentDidMount() {
+    this.updateDimensions();
+    window.addEventListener('resize', this.updateDimensions);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  }
+
+  updateDimensions() {
+    this.setState({
+      width: window.innerWidth,
+      height: window.innerHeight
+    });
   }
 
   _onResponsive(responsive) {
@@ -41,7 +63,12 @@ class Main extends Component {
     const priority = (includeNav && responsive === 'single' ? 'left' : 'right');
 
     return (
-      <App centered={false}>
+      <App centered={false}
+        // style={{
+        //   height: this.state.height,
+        //   width: this.state.width,
+        // }}
+      >
         <Router>
           <Split
             priority={priority}
@@ -56,8 +83,10 @@ class Main extends Component {
               <Route path='/section/:section' component={Section} />
               <Route path='/post/:post' component={Post} />
               <Route path='/dashboard' component={Dashboard} />
-              <Route path='/login' component={Login} />
+              {/* <Route path='/login' component={Login} /> */}
               <Route path='/support' component={Support} />
+              {/* <Route path='/nextissue' component={Next} /> */}
+              <Route path='/about' component={About} />
               {/* <Route path='/tasks/:id' component={Task} /> */}
               {/* <Route path='/tasks' component={Tasks} /> */}
               <Route path='/*' component={NotFound} />

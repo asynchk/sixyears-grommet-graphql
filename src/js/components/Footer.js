@@ -22,22 +22,23 @@ const FooterEle = () => (
     <Box direction='row'
       align='center'
       pad={{ between: 'medium' }}>
-      <Paragraph size='small' margin='none'>
-                © 2018 AsyncHK, A Flying Production
-      </Paragraph>
+      
       <Menu direction='row'
         size='small'
         dropAlign={{ right: 'right' }}>
-        <Anchor href='/support'>
-                    Support
+        <Anchor href='/about'>
+          關於六年
         </Anchor>
-        <Anchor href='#'>
+        {/* <Anchor href='#'>
                     Contact
         </Anchor>
         <Anchor href='#'>
                     About
-        </Anchor>
+        </Anchor> */}
       </Menu>
+      <Paragraph size='small' margin='none'>
+        © 2018 <a href="http://async.hk">AsyncHK</a>, A Flying Production
+      </Paragraph>
     </Box>
   </Footer>
 );

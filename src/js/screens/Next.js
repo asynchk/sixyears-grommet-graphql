@@ -70,7 +70,6 @@ class Task extends Component {
         }
 
         return (
-            
             <Article primary={true} full={true}>
                 <Header
                     direction='row'

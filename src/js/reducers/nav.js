@@ -11,8 +11,8 @@ const initialState = {
   enabled: true, // start with nav disabled
   responsive: 'multiple',
   items: [
-    { path: '/', label: 'Home' },
-    { path: '/sections', label: 'Sections' }
+    { path: '/', label: '主頁' },
+    { path: '/sections', label: '專欄' }
   ]
 };
 

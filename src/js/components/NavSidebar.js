@@ -14,6 +14,12 @@ import Image from 'grommet/components/Image';
 import SessionMenu from './SessionMenu';
 import { navActivate } from '../actions/nav';
 
+
+const internalItems = [
+  { path: '/about', label: '關於六年' },
+  // { path: '', label: '投稿' }
+]
+
 class NavSidebar extends Component {
   constructor() {
     super();
@@ -38,6 +44,17 @@ class NavSidebar extends Component {
       }}/>
     ));
 
+    const internalLinks = internalItems.map(page => (
+      <Anchor
+        key={page.label}
+        // path={page.path}
+        label={page.label}
+        onClick={() => {
+          if (page.path) window.location.pathname = page.path;
+          // this.props.dispatch(navActivate(false));
+        }} />
+    ));
+
     return (
       <Sidebar colorIndex='neutral-1-t' fixed={true}>
         <Header size='large' justify='between' pad={{ horizontal: 'medium' }}>
@@ -49,7 +66,7 @@ class NavSidebar extends Component {
                 width: 50
               }}
             />
-            <span>The Six Years</span>
+            {/* <span>The Six Years</span> */}
           </Title>
           <Button
             icon={<CloseIcon />}
@@ -61,8 +78,11 @@ class NavSidebar extends Component {
         <Menu fill={true} primary={true}>
           {links}
         </Menu>
-        <Footer pad={{ horizontal: 'medium', vertical: 'small' }}>
-          <SessionMenu dropAlign={{ bottom: 'bottom' }} />
+        <Footer>
+          {/* <SessionMenu dropAlign={{ bottom: 'bottom' }} /> */}
+          <Menu fill={true} primary={true}>
+            {internalLinks}
+          </Menu>
         </Footer>
       </Sidebar>
     );

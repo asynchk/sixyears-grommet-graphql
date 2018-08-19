@@ -51,7 +51,87 @@ class Section extends Component {
             this.state.chosenPostId == "" && this.setState({ chosenPostId: pid })
         }
         
+        const guide = (<Box
+            direction='column'
+            justify='start'
+            align='center'
+            wrap={true}
+            colorIndex='light-2'
+            // pad='small'
+            full='horizontal'
+            size={{
+                height: { min: 'small' }
+            }}
+            style={{
+                overflowX: 'auto',
+                height: 250,
+                alignContent: 'start'
+                // padding: 10,
+            }}
+        >
+            {
+                Section && Section.posts.map(p => {
+                    console.log(p)
+                    const chosen = p.id == this.state.chosenPostId;
+                    return (
+                        <Box
+                            pad='none'
+                            margin='none'
+                        >
+                            <Box
+                                key={p.id}
+                                texture={chosen || !p.background ? '' : `${location.origin}/${p.background.src}`}
+                                // label={p.author}
+                                // heading={<Header>{p.title}</Header>}
+                                // description={p.description}
+                                // link={<Anchor
+                                //     href={`/post/${p.id}`}
+                                //     label='Go To Section'
+                                //     icon={<LinkNextIcon />}
+                                // />}
+                                align='center'
+                                justify='center'
 
+                                colorIndex='light-1-a'
+                                // size='small'
+                                pad='small'
+                                margin='small'
+                                onClick={() => {
+                                    // if (window.innerWidth > 716) {
+                                    this.setState({
+                                        chosenPostId: p.id,
+
+                                    })
+                                    // } else {
+                                    //     window.location = `/post/${p.id}`;
+                                    // }
+                                }}
+                                style={{
+                                    height: 200,
+                                    width: 220,
+                                    marginBottom: 5,
+
+                                    boxShadow: chosen ? '0 0px 16px 0 rgba(0,0,0,.12)' : ''
+                                }}
+
+                            >
+                                <Heading size='small' tag='h2'>
+                                    {chosen || !p.background ? p.title || p.author || '無題' : ''}
+                                </Heading>
+
+                            </Box>
+                            {
+                                chosen && <Box
+                                    align='center'
+                                >
+                                    <FormDownIcon />
+                                </Box>}
+                        </Box>
+
+                    )
+                })
+            }
+        </Box>)
         // this.props.sectionData.Section &&
         // ßthis.props.sectionData.Section.posts.length == 1 && this.props.history.push(`post/${this.props.sectionData.Section.posts[0].id}`, this.props.sectionData.Section)
         return(
@@ -62,7 +142,7 @@ class Section extends Component {
                 {/* <Hero
                     background={<Image src={`${location.origin}/${Section.background.src}`} fit='cover' full />}
                     size="small"
-
+                    
                 >
                     <Box direction='row'
                         justify='center'
@@ -79,89 +159,11 @@ class Section extends Component {
                         </Box>
                     </Box>
                 </Hero> */}
-                <Box
-                    direction='column'
-                    justify='start'
-                    align='center'
-                    wrap={true}
-                    colorIndex='light-2'
-                    // pad='small'
-                    full='horizontal'
-                    size={{
-                        height: {min: 'small'}
-                    }}
-                    style={{
-                        overflowX: 'auto',
-                        height: 250,
-                        alignContent: 'start'
-                        // padding: 10,
-                    }}
-                >
-                    {
-                        Section && Section.posts.map(p => {
-                            console.log(p)
-                                    const chosen = p.id == this.state.chosenPostId;
-                            return (
-                                <Box
-                                    pad='none'
-                                    margin='none'
-                                >
-                            <Box
-                                key={p.id}
-                                        texture={chosen || !p.background ? '' : `${location.origin}/${p.background.src}`}
-                                // label={p.author}
-                                // heading={<Header>{p.title}</Header>}
-                                // description={p.description}
-                                // link={<Anchor
-                                //     href={`/post/${p.id}`}
-                                //     label='Go To Section'
-                                //     icon={<LinkNextIcon />}
-                                // />}
-                                align='center'
-                                justify='center'
-
-                                colorIndex='light-1-a'
-                                // size='small'
-                                pad='small'
-                                margin='small'
-                                        onClick={() => {
-                                            // if (window.innerWidth > 716) {
-                                                this.setState({
-                                                    chosenPostId: p.id,
-
-                                                })
-                                            // } else {
-                                            //     window.location = `/post/${p.id}`;
-                                            // }
-                                        }}
-                                    style={{
-                                        height: 200,
-                                        width: 220,
-                                        marginBottom: 5,
-
-                                        boxShadow: chosen?'0 0px 16px 0 rgba(0,0,0,.12)': ''
-                        }}
-
-                >
-                            <Heading size='small' tag='h2'>
-                                            {chosen || !p.background ? p.title || p.author || '無題' : ''}
-                            </Heading>
-                            
-                            </Box>
-                                    {
-                                    chosen && <Box
-                                    align='center'
-                                    >
-                                        <FormDownIcon />
-                                    </Box>}
-                            </Box>
-                        
-                        )})
-                    }
-                </Box>
+                {guide}
                 <Box>
                             <PostHori postId={this.state.chosenPostId} />
                 </Box>
+                        {guide}
               
                 <Footer />
             </Article>:

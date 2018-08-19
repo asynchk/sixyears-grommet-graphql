@@ -27,39 +27,74 @@ import Spinning from 'grommet/components/icons/Spinning';
 import DuplicateIcon from 'grommet/components/icons/base/Duplicate';
 import NavControl from './NavControl';
 // import Footer from '../Footer';
+import Toast from 'grommet/components/Toast';
 
+class HeaderSix extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      toast: null,
+    };
+  }
 
-const HeaderSix = (props) => {
-    return(
-        <Header
-            fixed
-            direction='row'
-            justify='between'
-            size='medium'
-            pad={{ horizontal: 'medium', between: 'small' }}
-        >
-            <NavControl />
-            <Box flex={true}
-                justify='end'
-                direction='row'
-                responsive={false}>
-                <Menu icon={<DuplicateIcon />}
-                    dropAlign={{ "right": "right" }}>
-                    <Anchor href='#'
-                        className='active'>
-                        First
-      </Anchor>
-                    <Anchor href='#'>
-                        Second
-      </Anchor>
-                    <Anchor href='#'>
-                        Third
-      </Anchor>
-                </Menu>
-            </Box>
+  render() {
 
-        </Header>
-    )
-};
+    return (
+      <Header
+        fixed
+        direction='row'
+        justify='between'
+        size='medium'
+        pad={{ horizontal: 'medium', between: 'small' }}
+        style={{
+          zIndex: 1,
+        }}
+      >
+        <NavControl />
+        <Box flex={true}
+          justify='end'
+          direction='row'
+          responsive={false}>
+          <Menu
+            style={{
+
+              zIndex: 10,
+            }}
+            icon={<DuplicateIcon />}
+            dropAlign={{ right: 'right' }}>
+            <Anchor
+              style={{
+                marginTop: 50,
+                zIndex: 100
+              }}
+              // href='/nextissue'
+              
+              className='active' />
+            <Anchor
+              style={{
+                zIndex: 100
+              }}
+              // href='/nextissue'
+                        onClick={() => {
+                            this.setState({
+                                toast: <Toast status='warning'
+                                    onClose={() => this.setState({ toast: null })}>
+
+                                    即將開放！敬請期待！
+                  </Toast>
+                            })
+                                ;
+                        }}
+              className='active'>
+                        投稿
+            </Anchor>
+          </Menu>
+        </Box>
+        {this.state.toast}
+      </Header>
+    );
+  }
+}
+
 
 export default HeaderSix;

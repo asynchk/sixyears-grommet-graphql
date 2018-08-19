@@ -75,7 +75,7 @@ class Dashboard extends Component {
             <Heading margin='none'>The Six Years</Heading>
           </Box>
         </Box>
-        <Heading tag='h2' strong={true}>{temp.featureSection}</Heading>
+        {/* <Heading tag='h2' strong={true}>{temp.featureSection}</Heading> */}
         <Box
           align='center'
           colorIndex='light-2'
@@ -85,7 +85,9 @@ class Dashboard extends Component {
             fill
           >
             {allSections && allSections.map(s => (
-              <Tile>
+              <Tile
+                // wide
+              >
                 <Card
                   margin='medium'
                   key={s.id}
@@ -93,7 +95,7 @@ class Dashboard extends Component {
                   label={s.subheader}
                   heading={s.header}
                   colorIndex='light-1'
-                  description={s.description? <Paragraph>{s.description}</Paragraph> : null}
+                  description={s.description ? <Paragraph>{s.description}</Paragraph> : <Paragraph></Paragraph>}
                   onClick={() => window.location.pathname = `/section/${s.id}`}
                 />
               </Tile>
