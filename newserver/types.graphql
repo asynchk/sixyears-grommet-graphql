@@ -5,6 +5,7 @@ type User @model {
   id: ID! @isUnique
   name: String
   dateOfBirth: DateTime
+  email
 
   # Uncomment below - you can declare relations between models like this
 
@@ -39,7 +40,7 @@ type ThumbnailBackgroundImage @model {
   id: ID! @isUnique
   title: String
   description: String
-  appearIn: Section! @relation(name: "SectionBackgroundImage")
+  appearIn: Section! @relation(name: "SectionBackgroundImage", cascadeDelete: false)
   src: String! @defaultValue(value: "img/default-section-bg.jpg")
   bigSrc: String @defaultValue(value: "img/default-section-bg.jpg")
 }
@@ -75,9 +76,10 @@ type Section @model {
   header: String!
   subheader: String
   description: String
+  isPublished: Boolean @defaultValue(value: "true")
   layout: Int @defaultValue(value: 1)
   featured: Int @defaultValue(value: 1)
-  background: ThumbnailBackgroundImage! @relation(name: "SectionBackgroundImage") 
+  background: ThumbnailBackgroundImage @relation(name: "SectionBackgroundImage", cascadeDelete: true) 
   posts: [Post!]! @relation(name: "SectionPost")
   issue: Issue! @relation(name: "IssueSections")
 }

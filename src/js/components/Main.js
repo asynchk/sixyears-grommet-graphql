@@ -9,12 +9,14 @@ import NavSidebar from './NavSidebar';
 import { navResponsive } from '../actions/nav';
 
 import Home from '../screens/HomeNews';
+import Sections from '../screens/HomeNewsSections';
 import Section from '../screens/Section';
 import Login from '../screens/Login';
 import Dashboard from '../screens/Dashboard';
 import Post from '../screens/Post';
-import Tasks from '../screens/Tasks';
-import Task from '../screens/Task';
+import Support from '../screens/Support';
+// import Tasks from '../screens/Tasks';
+// import Task from '../screens/Task';
 import NotFound from '../screens/NotFound';
 
 class Main extends Component {
@@ -49,12 +51,15 @@ class Main extends Component {
             {nav}
             <Switch>
               <Route exact={true} path='/' component={Home} />
+
+              <Route path='/sections' component={Sections} />
               <Route path='/section/:section' component={Section} />
               <Route path='/post/:post' component={Post} />
               <Route path='/dashboard' component={Dashboard} />
               <Route path='/login' component={Login} />
-              <Route path='/tasks/:id' component={Task} />
-              <Route path='/tasks' component={Tasks} />
+              <Route path='/support' component={Support} />
+              {/* <Route path='/tasks/:id' component={Task} /> */}
+              {/* <Route path='/tasks' component={Tasks} /> */}
               <Route path='/*' component={NotFound} />
             </Switch>
           </Split>

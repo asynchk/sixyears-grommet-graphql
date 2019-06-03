@@ -28,7 +28,14 @@ class NavSidebar extends Component {
     const { nav: { items } } = this.props;
 
     const links = items.map(page => (
-      <Anchor key={page.label} path={page.path} label={page.label} />
+      <Anchor
+      key={page.label}
+      // path={page.path}
+      label={page.label}
+      onClick={() => {
+        window.location.pathname = page.path;
+        this.props.dispatch(navActivate(false));
+      }}/>
     ));
 
     return (

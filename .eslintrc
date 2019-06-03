@@ -17,7 +17,13 @@
     "alert": true
   },
   "rules": {
+    "eqeqeq": 0,
+    "no-nested-ternary": 0,
+    "no-unused-expressions": 0,
+    "class-methods-use-this": 0,
     "react/jsx-filename-extension": 0,
+    "react/jsx-max-props-per-line": 0,
+    "react/prop-types": 0,
     "react/forbid-prop-types": 0,
     "react/jsx-boolean-value": 0,
     "react/jsx-first-prop-new-line": 0,

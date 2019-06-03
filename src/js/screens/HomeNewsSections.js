@@ -15,7 +15,7 @@ import Footer from '../components/Footer';
 import Anchor from 'grommet/components/Anchor';
 import Article from 'grommet/components/Article';
 import Box from 'grommet/components/Box';
-import Header from 'grommet/components/Header';
+import Header from '../components/Header';
 import Heading from 'grommet/components/Heading';
 import Label from 'grommet/components/Label';
 import List from 'grommet/components/List';
@@ -26,12 +26,12 @@ import Value from 'grommet/components/Value';
 import Meter from 'grommet/components/Meter';
 import Spinning from 'grommet/components/icons/Spinning';
 import { getMessage } from 'grommet/utils/Intl';
+import Tiles from 'grommet/components/Tiles';
+import Tile from 'grommet/components/Tile';
 
 import temp from '../message';
 import NavControl from '../components/NavControl';
-import {
-  loadDashboard, unloadDashboard
-} from '../actions/dashboard';
+
 
 import { pageLoaded } from './utils';
 
@@ -46,11 +46,11 @@ const sessionsNews = {
 class Dashboard extends Component {
   componentDidMount() {
     pageLoaded('The Six Years');
-    this.props.dispatch(loadDashboard());
+    // this.props.dispatch(loadDashboard());
   }
 
   componentWillUnmount() {
-    this.props.dispatch(unloadDashboard());
+    // this.props.dispatch(unloadDashboard());
   }
 
   render() {
@@ -58,114 +58,54 @@ class Dashboard extends Component {
     console.log(this.props);
     const { error, tasks } = this.props;
     ({ allSections } = this.props.allSections);
-    const { intl } = this.context;
-
-    let errorNode;
-    let listNode;
-    if (error) {
-      errorNode = (
-        <Notification
-          status='critical'
-          size='large'
-          state={error.message}
-          message='An unexpected error happened, please try again later'
-        />
-      );
-    }
     const homeImage = (
-      <Image
-        src='/img/home-hero.jpg'
-        fit='cover'
-        full={true}
-      />
+      <Image src='/img/home-hero.jpg' fit='cover' full={true} />
     );
 
     return (
       <Article primary={true}>
-        <Header
-          direction='row'
-          justify='between'
-          size='large'
+        <Header direction='row' justify='between' size='large'
           pad={{ horizontal: 'medium', between: 'small' }}
         >
           <NavControl />
         </Header>
-        {errorNode}
-        <Hero
-          background={homeImage}
-
-        >
-          <Box direction='row'
-            justify='center'
-            align='center'>
-            <Box basis='1/2'
-              align='end'
-              pad='medium' />
-            <Box basis='1/2'
-              align='start'
-              pad='medium'>
-              <Heading margin='none'>
-                The Six Years
-              </Heading>
-            </Box>
+        <Hero background={homeImage} />
+        <Box direction='row' justify='center' align='center'>
+          <Box basis='1/2' align='center' pad='medium'>
+            <Heading margin='none'>The Six Years</Heading>
           </Box>
-        </Hero>
+        </Box>
+        <Heading tag='h2' strong={true}>{temp.featureSection}</Heading>
         <Box
-          direction='row'
-          justify='start'
           align='center'
-          wrap={true}
           colorIndex='light-2'
           pad='small'
         >
-          {
-            allSections && allSections.map(s => (
-              <Card
-                key={s.id}
-                thumbnail={s.background.src}
-                label={s.subheader}
-                heading={s.header}
-                description={s.description}
-                link={<Anchor
-                  href={`/section/${s.id}`}
-                  label='Go To Section'
-                  icon={<LinkNextIcon />}
-                />}
-              />))
-          }
+          <Tiles
+            fill
+          >
+            {allSections && allSections.map(s => (
+              <Tile>
+                <Card
+                  margin='medium'
+                  key={s.id}
+                  thumbnail={s.background.src}
+                  label={s.subheader}
+                  heading={s.header}
+                  colorIndex='light-1'
+                  description={s.description? <Paragraph>{s.description}</Paragraph> : null}
+                  onClick={() => window.location.pathname = `/section/${s.id}`}
+                />
+              </Tile>
+            ))
+            }
+          </Tiles>
         </Box>
-        <Box pad='medium'>
-          <Heading tag='h3' strong={true}>
-            {temp.featureSection}
-          </Heading>
-          <Paragraph size='large'>
-            The backend here is using request polling (5 second interval).
-            See <Anchor path='/tasks'
-              label={getMessage(intl, 'Tasks')} /> page for an example
-          of websocket communication.
-          </Paragraph>
-        </Box>
-        {listNode}
         <Footer />
       </Article>
     );
   }
 }
-
-Dashboard.defaultProps = {
-  error: undefined,
-  tasks: []
-};
-
-Dashboard.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  error: PropTypes.object,
-  tasks: PropTypes.arrayOf(PropTypes.object)
-};
-
-Dashboard.contextTypes = {
-  intl: PropTypes.object
-};
 
 const ALL_SECTIONS_QUERY = gql`
   query FETCH_ALL_SECTIONS {

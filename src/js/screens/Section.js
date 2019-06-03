@@ -29,6 +29,7 @@ import { getMessage } from 'grommet/utils/Intl';
 import NavControl from '../components/NavControl';
 import Section from '../components/Section/Section';
 import Section2 from '../components/Section/Section2';
+import Section3 from '../components/Section/Section3';
 
 import { pageLoaded } from './utils';
 
@@ -52,6 +53,8 @@ class SectionScreen extends Component {
         return <Section sectionId={params.section} {...this.props} />;
       case 2:
         return <Section2 sectionId={params.section} {...this.props} />;
+      case 3:
+        return <Section3 sectionId={params.section} {...this.props} />;
       default:
         return <Section sectionId={params.section} {...this.props} />;
     }
